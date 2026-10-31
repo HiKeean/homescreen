@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+    </queries>
+
+    <application
+        android:allowBackup="false"
+        android:label="Homescreen"
+        android:theme="@style/Theme.Homescreen">
+
+        <activity
+            android:name=".launcher.HomeActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:stateNotNeeded="true"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".enforcement.GateActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:taskAffinity=""
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".enforcement.LimitActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:taskAffinity="" />
+
+        <activity
+            android:name=".alarm.AlarmActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:taskAffinity="" />
+
+        <service
+            android:name=".alarm.AlarmService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
+
+        <receiver
+            android:name=".alarm.AlarmReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".enforcement.GateService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Mendeteksi app bank yang dibuka untuk menampilkan layar catat pengeluaran" />
+        </service>
+
+        <receiver
+            android:name=".enforcement.BootReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>
