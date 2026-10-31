@@ -109,6 +109,4 @@ More detail: [PRD.md](PRD.md), [ARCHITECTURE.md](ARCHITECTURE.md), [TODO.md](TOD
 - Automatic location for weather via a manual refresh button.
 - A "pay a fine to loosen the limit" mode.
 
-## License
 
-No license yet. All rights reserved until one is added.
